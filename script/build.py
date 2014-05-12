@@ -7,16 +7,17 @@ import sys
 
 
 CONFIGURATIONS = ['Release', 'Debug']
-SOURCE_ROOT = os.path.dirname(os.path.dirname(__file__))
+SOURCE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def main():
+  print SOURCE_ROOT
   os.chdir(SOURCE_ROOT)
 
   ninja = os.path.join('vendor', 'depot_tools', 'ninja')
   if sys.platform == 'win32':
     ninja += '.exe'
-
+  print ninja
   args = parse_args()
   for config in args.configuration:
     build_path = os.path.join('out', config)
