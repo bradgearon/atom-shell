@@ -7,7 +7,7 @@
 
 #include "native_mate/dictionary.h"
 #include "ui/base/clipboard/clipboard.h"
-
+#include "ui/base/clipboard/clipboard_types.h"
 #include "atom/common/node_includes.h"
 
 namespace {
@@ -15,7 +15,7 @@ namespace {
 bool Has(const std::string& format_string) {
   ui::Clipboard* clipboard = ui::Clipboard::GetForCurrentThread();
   ui::Clipboard::FormatType format(ui::Clipboard::GetFormatType(format_string));
-  return clipboard->IsFormatAvailable(format, ui::Clipboard::BUFFER_STANDARD);
+  return clipboard->IsFormatAvailable(format, ui::ClipboardType::CLIPBOARD_TYPE_COPY_PASTE);
 }
 
 std::string Read(const std::string& format_string) {
@@ -31,7 +31,7 @@ std::string ReadText() {
   ui::Clipboard* clipboard = ui::Clipboard::GetForCurrentThread();
 
   std::string data;
-  clipboard->ReadAsciiText(ui::Clipboard::BUFFER_STANDARD, &data);
+  clipboard->ReadAsciiText(ui::ClipboardType::CLIPBOARD_TYPE_COPY_PASTE, &data);
   return data;
 }
 
@@ -41,11 +41,11 @@ void WriteText(const std::string text) {
       std::vector<char>(text.begin(), text.end()));
 
   ui::Clipboard* clipboard = ui::Clipboard::GetForCurrentThread();
-  clipboard->WriteObjects(ui::Clipboard::BUFFER_STANDARD, object_map);
+  clipboard->WriteObjects(ui::ClipboardType::CLIPBOARD_TYPE_COPY_PASTE, object_map);
 }
 
 void Clear() {
-  ui::Clipboard::GetForCurrentThread()->Clear(ui::Clipboard::BUFFER_STANDARD);
+  ui::Clipboard::GetForCurrentThread()->Clear(ui::ClipboardType::CLIPBOARD_TYPE_COPY_PASTE);
 }
 
 void Initialize(v8::Handle<v8::Object> exports) {
