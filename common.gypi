@@ -131,6 +131,7 @@
     ],
     'msvs_cygwin_shell': 0, # Strangely setting it to 1 would make building under cygwin fail.
     'msvs_disabled_warnings': [
+      4996,
       4005,  # (node.h) macro redefinition
       4189,  # local variable is initialized but not referenced
       4201,  # (uv.h) nameless struct/union
@@ -143,6 +144,9 @@
         # exception handling enabled.
         # http://support.microsoft.com/kb/154419
         'ExceptionHandling': 1,
+	    'AdditionalOptions': [
+	      '/FS', # Added automatically by newer versions of gyp for VS2013.
+	   ],
       },
       'VCLinkerTool': {
         'AdditionalOptions': [
